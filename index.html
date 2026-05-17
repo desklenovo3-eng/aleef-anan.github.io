@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>אליף ענאן | ניתוח דמוגרפי כפר סלמה</title>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue: #0b66b3;
+    --teal: #2a9d8f;
+    --light-bg: #f5f8fc;
+    --card-bg: #ffffff;
+    --text: #1a1a2e;
+    --muted: #5a6a7a;
+    --border: #dde6f0;
+    --accent: #e8f2fc;
+  }
+
+  body {
+    font-family: 'Assistant', Arial, sans-serif;
+    background: var(--light-bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0b3d6e 0%, #0b66b3 50%, #2a9d8f 100%);
+    color: white;
+    padding: 60px 24px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; right: -40px;
+    width: 250px; height: 250px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 999px;
+    padding: 4px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .hero .subtitle {
+    font-size: 18px;
+    opacity: 0.85;
+    margin-bottom: 6px;
+  }
+  .hero .meta {
+    font-size: 14px;
+    opacity: 0.65;
+    margin-bottom: 32px;
+  }
+  .kpi-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .kpi {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    padding: 16px 24px;
+    min-width: 120px;
+  }
+  .kpi-num {
+    font-size: 28px;
+    font-weight: 700;
+    display: block;
+  }
+  .kpi-label {
+    font-size: 12px;
+    opacity: 0.75;
+    margin-top: 2px;
+  }
+
+  /* LAYOUT */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .section {
+    padding: 56px 0;
+  }
+  .section-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(to left, transparent, var(--blue));
+    opacity: 0.2;
+  }
+  .section-sub {
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 32px;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+  }
+  .card h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--blue);
+    margin-bottom: 10px;
+  }
+  .card p, .card li {
+    color: #3a4a5a;
+    font-size: 15px;
+  }
+  .card ul, .card ol {
+    padding-right: 20px;
+  }
+  .card li { margin-bottom: 6px; }
+
+  /* TOOLS */
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .tool-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .tool-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(11,102,179,0.1); }
+  .tool-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    margin: 0 auto 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+  .tool-card h4 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .tool-card p { font-size: 13px; color: var(--muted); }
+
+  /* FINDINGS */
+  .findings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .finding-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 20px 22px;
+    border-right: 5px solid;
+  }
+  .finding-card.blue { border-color: var(--blue); background: #f0f6fd; }
+  .finding-card.teal { border-color: var(--teal); background: #f0faf8; }
+  .finding-card.orange { border-color: #e76f51; background: #fef5f2; }
+  .finding-card.purple { border-color: #7b5ea7; background: #f6f3fb; }
+  .finding-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .finding-card .num { font-size: 26px; font-weight: 700; margin-bottom: 4px; }
+  .finding-card p { font-size: 13px; color: var(--muted); }
+  .finding-card.blue h4, .finding-card.blue .num { color: var(--blue); }
+  .finding-card.teal h4, .finding-card.teal .num { color: var(--teal); }
+  .finding-card.orange h4, .finding-card.orange .num { color: #e76f51; }
+  .finding-card.purple h4, .finding-card.purple .num { color: #7b5ea7; }
+
+  /* PIPELINE */
+  .pipeline {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0;
+    margin: 24px 0;
+  }
+  .pipe-step {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    text-align: center;
+    flex: 1;
+    min-width: 120px;
+  }
+  .pipe-step .icon { font-size: 24px; margin-bottom: 6px; }
+  .pipe-step h4 { font-size: 13px; font-weight: 600; color: var(--blue); }
+  .pipe-step p { font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .pipe-arrow {
+    font-size: 20px;
+    color: var(--blue);
+    opacity: 0.4;
+    padding: 0 6px;
+    flex-shrink: 0;
+  }
+
+  /* TABLES */
+  .db-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+  }
+  .db-table {
+    background: var(--accent);
+    border: 1px solid #c5d9ef;
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .db-table h4 { font-size: 13px; font-weight: 700; color: var(--blue); margin-bottom: 8px; }
+  .db-table span {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    padding: 2px 0;
+    border-bottom: 1px dashed #dde6f0;
+  }
+  .db-table span:last-child { border-bottom: none; }
+
+  /* FOOTER */
+  footer {
+    background: #0b3d6e;
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    padding: 32px 20px;
+    font-size: 14px;
+  }
+  footer strong { color: white; }
+
+  /* BADGE */
+  .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--blue);
+    border-radius: 999px;
+    padding: 3px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 3px;
+  }
+
+  @media (max-width: 600px) {
+    .pipeline { flex-direction: column; }
+    .pipe-arrow { transform: rotate(90deg); }
+    .kpi { min-width: 100px; padding: 12px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">Data Analysis Portfolio — פרויקט 3 ו-4</div>
+  <h1>ניתוח דמוגרפי של כפר סלמה</h1>
+  <p class="subtitle">אליף ענאן</p>
+  <p class="meta">ת"ז 052675436 &nbsp;|&nbsp; Python · SQL · Power BI</p>
+  <div class="kpi-row">
+    <div class="kpi"><span class="kpi-num">3,760</span><div class="kpi-label">סך תושבים</div></div>
+    <div class="kpi"><span class="kpi-num">83%</span><div class="kpi-label">כיסוי ביטוחי</div></div>
+    <div class="kpi"><span class="kpi-num">20</span><div class="kpi-label">קבוצות גיל</div></div>
+    <div class="kpi"><span class="kpi-num">5</span><div class="kpi-label">טבלאות SQL</div></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="container">
+  <div class="section">
+    <div class="section-title">סקירת הפרויקט</div>
+    <p class="section-sub">ניתוח דמוגרפי וחברתי-מוסדי של ישוב סלמה שבגליל התחתון</p>
+    <div class="card">
+      <h3>מטרת הפרויקט</h3>
+      <p>לספק תמונת מצב מבוססת נתונים על התפלגות האוכלוסייה לפי גיל, ולבחון את השפעתה על כיסוי ביטוחי, זכאות להטבות, וחלוקת משאבי כוחות הביטחון. הפרויקט מבוסס על מסד נתונים שנבנה ב-SQL Server עם 5 טבלאות מקושרות.</p>
+    </div>
+    <div class="card">
+      <h3>שאלות המחקר</h3>
+      <ol>
+        <li>מהי התפלגות האוכלוסייה לפי קבוצות גיל וכמה מכל קבוצה מבוטחים בקופות בריאות וביטוח לאומי?</li>
+        <li>האם קיימים פערים בגישה לשירותי בריאות וביטוח בין קבוצות גיל?</li>
+        <li>מהי התפלגות מקבלי ההטבות לפי גיל ומה שיעורם מהאוכלוסייה הכללית?</li>
+        <li>כיצד מחולקים משאבי כוחות הביטחון לפי גיל וסוג שירות?</li>
+        <li>אילו קבוצות גיל דורשות תכנון מדיניות ממוקד בבריאות, רווחה וגיוס?</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- PIPELINE -->
+  <div class="section" style="padding-top: 0;">
+    <div class="section-title">תהליך העבודה</div>
+    <p class="section-sub">זרימת הנתונים מ-SQL ועד לדשבורד האינטראקטיבי</p>
+    <div class="pipeline">
+      <div class="pipe-step">
+        <div class="icon">🗄️</div>
+        <h4>SQL Server</h4>
+        <p>בניית מסד נתונים<br>village_sllama</p>
+      </div>
+      <div class="pipe-arrow">←</div>
+      <div class="pipe-step">
+        <div class="icon">📄</div>
+        <h4>CSV Export</h4>
+        <p>ייצוא 5 טבלאות<br>לקבצי CSV</p>
+      </div>
+      <div class="pipe-arrow">←</div>
+      <div class="pipe-step">
+        <div class="icon">🐍</div>
+        <h4>Python / pandas</h4>
+        <p>ניתוח, חישוב<br>וזיהוי חריגים</p>
+      </div>
+      <div class="pipe-arrow">←</div>
+      <div class="pipe-step">
+        <div class="icon">📊</div>
+        <h4>Power BI</h4>
+        <p>דשבורד אינטראקטיבי<br>4 דפי דוחות</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SQL -->
+  <div class="section" style="padding-top: 0;">
+    <div class="section-title">שלב SQL — מבנה מסד הנתונים</div>
+    <p class="section-sub">מסד נתונים בשם <code style="background:#e8f2fc;padding:2px 8px;border-radius:4px;color:#0b66b3;">village_sllama</code> עם 5 טבלאות מקושרות דרך מפתחות זרים לטבלת AgeGroups</p>
+    <div class="db-grid">
+      <div class="db-table">
+        <h4>AgeGroups ⭐</h4>
+        <span>AgeGroupID (PK)</span>
+        <span>AgeRange</span>
+        <span>PopulationCount</span>
+      </div>
+      <div class="db-table">
+        <h4>HealthInsurance</h4>
+        <span>HealthID (PK)</span>
+        <span>FundName</span>
+        <span>AgeGroupID (FK)</span>
+        <span>InsuredCount</span>
+      </div>
+      <div class="db-table">
+        <h4>NationalInsurance</h4>
+        <span>NI_ID (PK)</span>
+        <span>EmploymentStatus</span>
+        <span>AgeGroupID (FK)</span>
+        <span>InsuredCount</span>
+      </div>
+      <div class="db-table">
+        <h4>Allowances</h4>
+        <span>AllowanceID (PK)</span>
+        <span>AllowanceType</span>
+        <span>AgeGroupID (FK)</span>
+        <span>RecipientCount</span>
+      </div>
+      <div class="db-table">
+        <h4>SecurityForces</h4>
+        <span>ServiceID (PK)</span>
+        <span>ForceType</span>
+        <span>AgeGroupID (FK)</span>
+        <span>ServantCount</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOOLS -->
+  <div class="section" style="padding-top: 0;">
+    <div class="section-title">כלים וטכניקות</div>
+    <p class="section-sub">סט כלים מקצועי לניתוח נתונים מקצה לקצה</p>
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-icon" style="background:#fff3e0;">🐍</div>
+        <h4>Python & pandas</h4>
+        <p>טעינת DataFrames, חישובי כיסוי, ניתוח קצבאות, זיהוי חריגים IQR</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon" style="background:#e8f5e9;">🗄️</div>
+        <h4>SQL Server</h4>
+        <p>בניית מסד נתונים, שאילתות SELECT/GROUP BY, קשרי מפתח זר</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon" style="background:#e3f2fd;">📊</div>
+        <h4>Power BI Desktop</h4>
+        <p>מודל כוכב, מדדי DAX, 4 דפי דוחות, Drill-through אינטראקטיבי</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon" style="background:#f3e5f5;">📓</div>
+        <h4>Jupyter Notebook</h4>
+        <p>מחברת ניתוח עם HTML מעוצב, Styler pandas וויזואליזציות</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINDINGS -->
+  <div class="section" style="padding-top: 0;">
+    <div class="section-title">ממצאים מרכזיים</div>
+    <p class="section-sub">תוצאות הניתוח הדמוגרפי של כפר סלמה</p>
+    <div class="findings-grid">
+      <div class="finding-card blue">
+        <h4>אוכלוסייה</h4>
+        <div class="num">3,760</div>
+        <p>תושבים ב-20 קבוצות גיל, התפלגות אחידה של 180–196 לכל קבוצה</p>
+      </div>
+      <div class="finding-card teal">
+        <h4>כיסוי ביטוחי</h4>
+        <div class="num">83–84%</div>
+        <p>3,120 מבוטחים בקופות בריאות, 3,176 בביטוח לאומי — כיסוי גבוה</p>
+      </div>
+      <div class="finding-card orange">
+        <h4>מקבלי קצבאות</h4>
+        <div class="num">1,174</div>
+        <p>31.2% מהאוכלוסייה — ריכוז גבוה בקבוצות מבוגרות (65+)</p>
+      </div>
+      <div class="finding-card purple">
+        <h4>כוחות ביטחון</h4>
+        <div class="num">850</div>
+        <p>22.6% מהאוכלוסייה, מרוכזים בגילאים 15–35, המשטרה הגדולה ביותר (285)</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCLUSIONS -->
+  <div class="section" style="padding-top: 0;">
+    <div class="section-title">מסקנות והמלצות</div>
+    <p class="section-sub">תובנות מבוססות נתונים לקביעת מדיניות</p>
+    <div class="card">
+      <ul>
+        <li>הכיסוי הביטוחי גבוה ברמה הכוללת, אך ייתכנו <strong>פערים פר-קבוצת גיל</strong> הדורשים בחינה ממוקדת</li>
+        <li>ריכוז מקבלי הקצבאות בקבוצות המבוגרות מצביע על <strong>תלות גבוהה</strong> הדורשת מדיניות רווחה ממוקדת</li>
+        <li>כוחות הביטחון מרוכזים בגילאים הצעירים — <strong>זיהוי חריגים ב-ServantCount</strong> מחייב בדיקת איכות נתונים</li>
+        <li>ההתפלגות האחידה של האוכלוסייה מאפשרת <strong>השוואה מהימנה</strong> בין קבוצות גיל</li>
+      </ul>
+    </div>
+    <div style="margin-top: 16px;">
+      <span class="badge">Python</span>
+      <span class="badge">pandas</span>
+      <span class="badge">SQL Server</span>
+      <span class="badge">Power BI</span>
+      <span class="badge">DAX</span>
+      <span class="badge">Jupyter</span>
+      <span class="badge">IQR Analysis</span>
+      <span class="badge">Star Schema</span>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <strong>אליף ענאן</strong> &nbsp;|&nbsp; ניתוח דמוגרפי של כפר סלמה &nbsp;|&nbsp; פרויקט 3 ו-4
+</footer>
+
+</body>
+</html>
